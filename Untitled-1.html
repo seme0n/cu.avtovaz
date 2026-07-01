@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Руководство и педагогический состав - Университет Группы «АВТОВАЗ»</title>
+    <link rel="icon" href="/Content/images/favicon.ico" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: rgb(77, 89, 100);
+            --accent-color: rgb(245, 103, 30);
+            --light-bg: rgb(248, 249, 250);
+            --dark-text: rgb(51, 51, 51);
+            --light-text: rgb(255, 255, 255);
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+            --table-header-bg: #3a4a56;
+            --table-border: #e0e0e0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Inter", sans-serif;
+            font-optical-sizing: auto;
+            background-color: var(--primary-color);
+            color: var(--light-text);
+            line-height: 1.6;
+            background-image: url('../../Content/_Shared/fon.png');
+            background-repeat: repeat-y;
+            background-position: left top;
+        }
+
+        /* Header & Navigation */
+        .header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #3a4a56 100%);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            height: 160px;
+        }
+
+        .logo img {
+            height: 100%;
+        }
+
+        .main-nav {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+
+        .main-nav a {
+            color: var(--light-text);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .main-nav a:hover,
+        .main-nav a.active {
+            background-color: var(--accent-color);
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: var(--light-bg);
+            min-width: 250px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            z-index: 1001;
+        }
+        .dropdown-toggle {
+            font-size: 16px;
+            white-space: nowrap;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .dropdown-menu a {
+            color: var(--dark-text);
+            padding: 0.75rem 1rem;
+            display: block;
+            border-bottom: 1px solid #eee;
+        }
+
+        .dropdown-menu a:hover {
+            background-color: var(--accent-color);
+            color: var(--light-text);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background-color: var(--light-text);
+            border-radius: 2px;
+            transition: var(--transition);
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(rgba(73, 89, 102, 0.9), rgba(73, 89, 102, 0.9)),
+                        url(avtofoto.webp);
+            background-size: cover;
+            background-position: center;
+            padding: 4rem 0 2rem;
+            text-align: center;
+        }
+
+        .page-header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .page-header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--light-text);
+        }
+
+        .breadcrumb {
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 1rem;
+        }
+
+        .breadcrumb a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        /* Main Content */
+        .main-content {
+            background-color: var(--light-bg);
+            color: var(--dark-text);
+            padding: 3rem 0;
+        }
+
+        .container {
+            padding: 0 20px;
+        }
+
+        .section {
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-color), var(--primary-color));
+            border-radius: 2px;
+        }
+
+        /* Leadership Cards */
+        .leadership-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .leadership-card {
+            background: var(--light-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid var(--table-border);
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+        }
+
+        .leadership-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .leadership-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--accent-color);
+            flex-shrink: 0;
+        }
+
+        .leadership-info h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+        }
+
+        .leadership-info p {
+            margin-bottom: 0.5rem;
+            color: var(--dark-text);
+        }
+
+        .leadership-info a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .leadership-info a:hover {
+            color: #d97a24;
+        }
+
+        /* Table Styles */
+        .table-container {
+            overflow-x: auto;
+            background: var(--light-bg);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--table-border);
+            margin-bottom: 2rem;
+        }
+
+        .modern-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+
+        .modern-table th {
+            background-color: var(--table-header-bg);
+            color: var(--light-text);
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .modern-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--table-border);
+            color: var(--dark-text);
+        }
+
+        .modern-table tr:hover td {
+            background-color: rgba(245, 147, 53, 0.05);
+        }
+
+        .modern-table tr:nth-child(even) td {
+            background-color: rgba(73, 89, 102, 0.02);
+        }
+
+        /* Button Styles */
+        .btn {
+            display: inline-block;
+            padding: 0.6rem 1.2rem;
+            background-color: var(--accent-color);
+            color: var(--light-text);
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+
+        .btn:hover {
+            background-color: #d97a24;
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--accent-color);
+            color: var(--light-text);
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 2rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .back-link:hover {
+            color: var(--accent-color);
+        }
+
+        /* Accessibility Toggle */
+        .accessibility-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .accessibility-toggle img {
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .accessibility-toggle img:hover {
+            transform: scale(1.1);
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, #3a4a56 0%, var(--primary-color) 100%);
+            color: var(--light-text);
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section {
+            text-align: center;
+        }
+
+        .footer-section img {
+            height: 35px;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: #95aabb;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-section a:hover {
+            color: var(--accent-color);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: #95aabb;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .main-nav {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background-color: var(--primary-color);
+                flex-direction: column;
+                padding: 1rem;
+                gap: 0.5rem;
+            }
+
+            .main-nav.active {
+                display: flex;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-container {
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+
+            .leadership-card {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .leadership-avatar {
+                margin: 0 auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .modern-table {
+                font-size: 0.85rem;
+            }
+
+            .modern-table th,
+            .modern-table td {
+                padding: 0.75rem 0.5rem;
+            }
+
+            .table-container {
+                border-radius: 8px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .page-header {
+                padding: 2rem 0 1rem;
+            }
+
+            .leadership-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Accessibility Mode */
+        .accessibility-mode {
+            font-size: 18px !important;
+            line-height: 1.8 !important;
+        }
+
+        .accessibility-mode * {
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3) !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">
+                <img src="logotip.png" alt="Университет Группы АВТОВАЗ">
+            </div>
+            
+            <nav class="main-nav" id="mainNav">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Сведения об образовательной организации</a>
+                    <div class="dropdown-menu">
+                        <a href="/Information/Index">Основные сведения</a>
+                        <a href="perechenprogram.html">Структура и органы управления</a>
+                        <a href="documenti.html">Документы</a>
+                        <a href="obrazovanie.html">Образование</a>
+                        <a href="obrazstandart.html">Образовательные стандарты</a>
+                        <a href="Untitled-1.html">Руководство. Педагогический состав</a>
+                        <a href="Mattexobes.html">Материально-техническое обеспечение</a>
+                        <a href="https://cu-avtovaz.ru/Information/Scholarships">Стипендии и материальная поддержка</a>
+                        <a href="https://cu-avtovaz.ru/Information/PaidEducationalServices">Платные образовательные услуги</a>
+                        <a href="https://cu-avtovaz.ru/Information/FinancesReport">Финансово-хозяйственная деятельность</a>
+                        <a href="https://cu-avtovaz.ru/Information/Vacancies">Вакантные места</a>
+                        <a href="https://cu-avtovaz.ru/Information/Habitat">Доступная среда</a>
+                        <a href="https://cu-avtovaz.ru/Information/InternationalCooperation">Международное сотрудничество</a>
+                    </div>
+                </li>
+                
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Обучение</a>
+                    <div class="dropdown-menu">
+                        <a href="https://cu-avtovaz.ru/ApplicationForTraining/Index">Заявка на обучение</a>
+                        <a href="schedule.pdf">Расписание занятий</a>
+                        <a href="Untitled-2.html">График обучения</a>
+                        <a href="Untitled-3.html">Перечень программ</a>
+                        <a href="http://olimp.cu-avtovaz.ru/">Дистанционное обучение "ОЛИМПОКС"</a>
+                        <a href="https://lms.cu-avtovaz.ru/cabinet/login">Дистанционное обучение"УЧИ.ПРО"</a>
+                        <a href="https://cu-avtovaz.ru/Survey">Анкетирование</a>
+                    </div>
+                </li>
+                
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Новости</a>
+                    <div class="dropdown-menu">
+                        <a href="https://cu-avtovaz.ru/News/Index">Новости</a>
+                    </div>
+                </li>
+                
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Об Университете</a>
+                    <div class="dropdown-menu">
+                        <a href="https://cu-avtovaz.ru/About/Contacts">Контакты</a>
+                        <a href="https://cu-avtovaz.ru/About">История Университета</a>
+                        <a href="https://cu-avtovaz.ru/About/Map">Схема проезда</a>
+                        <a href="https://cu-avtovaz.ru/About/Antiterror">Антитеррористическая безопасность</a>
+                        <a href="http://www.lada.ru" target="_blank">АО «АВТОВАЗ»</a>
+                    </div>
+                </li>
+                
+                
+                <li class="dropdown-toggle">
+                    <a href="https://cu-avtovaz.ru/ApplicationForTraining/Index?TypeLetter=0">Задать вопрос</a>
+                </li>
+                
+            </nav>
+            
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="page-header-content">
+            <h1>Руководство и педагогический состав</h1>
+            <div class="breadcrumb">
+                <a href="/Home">Главная</a> &raquo; <a href="/About">Об Университете</a> &raquo; Руководство и педагогический состав
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Leadership Section -->
+            <section class="section">
+                <h2 class="section-title">Руководство</h2>
+                <div class="leadership-grid">
+                    <div class="leadership-card">
+                        <div class="leadership-info">
+                            <h3>Директор</h3>
+                            <p><strong>Терехов Олег Владимирович</strong></p>
+                            <p><a href="mailto:mail@cu-avtovaz.ru">mail@cu-avtovaz.ru</a></p>
+                            <p>Тел. (848 2) 73-60-97.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="leadership-card">
+                        <div class="leadership-info">
+                            <h3>Заместитель директора</h3>
+                            <p><strong>Манюхин Артем Игоревич</strong></p>
+                            <p><a href="mailto:mail@cu-avtovaz.ru">mail@cu-avtovaz.ru</a></p>
+                            <p>Тел. (848 2) 73-60-97.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Pedagogical Staff Section -->
+            <section class="section">
+                <h2 class="section-title">Педагогический (научно-педагогический) состав</h2>
+                
+                <div class="table-container">
+                    <table class="modern-table">
+                        <thead>
+                            <tr>
+                                <th>ФИО</th>
+                                <th>Должность</th>
+                                <th>Телефон</th>
+                                <th>Преподаваемые дисциплины</th>
+                                <th>Учёная степень</th>
+                                <th>Звание</th>
+                                <th>Трудовая деятельность (лет)</th>
+                                <th>Трудовая деятельность по специальности (лет)</th>
+                                <th>Документ об основном образовании</th>
+                                <th>Документ о переподготовке или повышении квалификации</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Коклюхин Александр Валериевич</td>
+                                <td>Старший преподаватель</td>
+                                <td>-</td>
+                                <td>Охрана труда</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>27</td>
+                                <td>0</td>
+                                <td>Тольяттинский политехнический институт, Инженер-механик, 1996 год</td>
+                                <td>Дополнительные профессиональные программы повышения квалификации "Требования охраны труда" (72 и 16 часов), 2024 год.</td>
+                            </tr>
+                            <tr>
+                                <td>Махмудов Расим Макаримович</td>
+                                <td>Мастер производственного обучения</td>
+                                <td>73-90-37</td>
+                                <td>Электрогазосварочные работы</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>28</td>
+                                <td>8</td>
+                                <td>Государственное бюджетное образовательное учреждение среднего профессионального образования Тольяттинский индустриально-педагогический колледж Профессиональное обучение (по отраслям) Мастер производственного обучения (техник)</td>
+                                <td>Частное образовательное учреждение дополнительного профессионального образования Технический учебный центр "Спектр" Дополнительная профессиональная программа повышения квалификации "Оборудование и технология сварочного производства", 40 часов, 11.10.2019</td>
+                            </tr>
+                            <tr>
+                                <td>Орлова Людмила Николаевна</td>
+                                <td>Старший преподаватель</td>
+                                <td>-</td>
+                                <td>Нормативная документация организации</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>Тольяттинский филиал Самарского педагогического института, 1992г. Преподаватель педагогики и психологии. Организатор-методист.</td>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <td>Пуденков Виталий Владимирович</td>
+                                <td>Старший преподаватель</td>
+                                <td>73-90-92</td>
+                                <td>Охрана труда. Чтение чертежей. Материаловедение. Общие сведения о гидроприводе</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>40</td>
+                                <td>25</td>
+                                <td>Тольяттинский политехнический институт Технология машиностроения металлорежущие станки и инструменты Инженер – механик</td>
+                                <td>Профессиональная переподготовка по программе "Педагогическое образование: педагогика профессионального образования", 280 часов, 10.11.2017. Поволжский межрегиональный филиал федерального государственного бюджетного учреждения "Всероссийский научно-исследовательский институт труда "Министерства труда и социальной защиты Российской Федерации". Дополнительная профессиональная программа повышения квалификации "Охрана труда", 72 часа, 17.12.2018</td>
+                            </tr>
+                            <tr>
+                                <td>Рябинова Елена Егоровна</td>
+                                <td>Старший преподаватель</td>
+                                <td>73-87-54</td>
+                                <td>Обучение руководителей и специалистов промышленной безопасности</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>36</td>
+                                <td>8</td>
+                                <td>Тольяттинский политехнический институт, электроснабжение промышленных предприятий, городов и сельского хозяйства</td>
+                                <td>Автономная некоммерческая организация дополнительного образования "Федеральный институт повышения квалификации и переподготовки" Профессиональная переподготовка по программе "Педагогическое образование: педагогика профессионального образования", 280 часов, 10.11.2017</td>
+                            </tr>
+                            <tr>
+                                <td>Стрельников Дмитрий Семенович</td>
+                                <td>Старший преподаватель</td>
+                                <td>-</td>
+                                <td>Охрана труда</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>28</td>
+                                <td>-</td>
+                                <td>Московский ордена Октябрьской революции и ордена Трудового красного Знамени институт стали и сплавов, инженер-металлург, 1992</td>
+                                <td>НОА НОДПО "Современная Академия Профессионального Образования", Охрана труда и пожарная безопасность, 2020</td>
+                            </tr>
+                            <tr>
+                                <td>Фокин Александр Петрович</td>
+                                <td>Старший мастер производственного обучения</td>
+                                <td>73-90-37</td>
+                                <td>Подготовка водителей погрузчика</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>Среднее профессионально-техническое училище №65, 1989г. Слесарь по ремонту автомобилей. Тольяттинское высшее военное строительное командное училище, 1993г. Инженер по строительству и эксплуатации зданий и сооружений</td>
+                                <td>.</td>
+                            </tr>
+                            <tr>
+                                <td>Чувилина Светлана Александровна</td>
+                                <td>Старший преподаватель</td>
+                                <td>73-87-54</td>
+                                <td>Обучение руководителей и специалистов промышленной безопасности</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>35</td>
+                                <td>8</td>
+                                <td>Куйбышевский политехнический институт им. В.В. Куйбышева, машины и аппараты химических производств, инженер-механик</td>
+                                <td>Автономная некоммерческая организация дополнительного образования "Федеральный институт повышения квалификации и переподготовки" Профессиональная переподготовка по программе "Педагогическое образование: педагогика профессионального образования", 280 часов, 10.11.2017</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div style="text-align: center; margin-top: 2rem;">
+                    <a href="#" onclick="history.back();return false;" class="back-link">Вернуться назад</a>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <img src="map.png" alt="Адрес">
+                    <p>445024, Российская Федерация, Самарская область, г. Тольятти, Южное шоссе, д.121</p>
+                </div>
+                <div class="footer-section">
+                    <img src="phone.png" alt="Телефон">
+                    <p>(8482) 73-88-22</p>
+                </div>
+                <div class="footer-section">
+                    <img src="mail.png" alt="Почта">
+                    <p><a href="mailto:mail@cu-avtovaz.ru">mail@cu-avtovaz.ru</a></p>
+                </div>
+                <div class="footer-section">
+                    <img src="vk.png" alt="VK">
+                    <p><a href="https://vk.com/public211289289" target="_blank">Университет в VK</a></p>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>Университет Группы «АВТОВАЗ» © 2026. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    
+    <!-- Accessibility Toggle -->
+    <button class="accessibility-toggle" onclick="toggleAccessibility()" aria-label="Версия для слабовидящих">
+        <img src="/Content/images/eyes_orange.png" alt="Версия для слабовидящих">
+    </button>
+
+    <script>
+        // Mobile Navigation
+        const hamburger = document.getElementById('hamburger');
+        const mainNav = document.getElementById('mainNav');
+        
+        hamburger.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+        });
+
+        // Accessibility Toggle
+        function toggleAccessibility() {
+            document.body.classList.toggle('accessibility-mode');
+            const style = document.createElement('style');
+            style.id = 'accessibility-styles';
+            style.textContent = `
+                .accessibility-mode {
+                    font-size: 18px !important;
+                    line-height: 1.8 !important;
+                }
+                .accessibility-mode * {
+                    text-shadow: 1px 1px 2px rgba(0,0,0,0.3) !important;
+                }
+                .accessibility-mode .modern-table th,
+                .accessibility-mode .modern-table td {
+                    padding: 1rem !important;
+                }
+            `;
+            document.head.appendChild(style);
+        }
+
+        // Table hover effects for better readability
+        document.querySelectorAll('.modern-table tr').forEach(row => {
+            row.addEventListener('mouseenter', () => {
+                row.style.backgroundColor = 'rgba(245, 147, 53, 0.05)';
+            });
+            row.addEventListener('mouseleave', () => {
+                row.style.backgroundColor = '';
+            });
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

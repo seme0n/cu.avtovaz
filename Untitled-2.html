@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>График обучения - Университет Группы «АВТОВАЗ»</title>
+    <link rel="icon" href="/Content/images/favicon.ico" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="stile.css">
+    <style>
+        :root {
+           --primary-color: rgb(77, 89, 100);
+            --accent-color: rgb(245, 103, 30);
+            --light-bg: rgb(248, 249, 250);
+            --dark-text: rgb(51, 51, 51);
+            --light-text: rgb(255, 255, 255);
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+            --table-header-bg: #3a4a56;
+            --table-border: #e0e0e0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Inter", sans-serif;
+            font-optical-sizing: auto;
+            background-color: var(--primary-color);
+            color: var(--light-text);
+            line-height: 1.6;
+            background-image: url('../../Content/_Shared/fon.png');
+            background-repeat: repeat-y;
+            background-position: left top;
+        }
+
+        /* Header & Navigation */
+        .header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #3a4a56 100%);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            height: 160px;
+        }
+
+        .logo img {
+            height: 100%;
+        }
+
+        .main-nav {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+
+        .main-nav a {
+            color: var(--light-text);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .main-nav a:hover,
+        .main-nav a.active {
+            background-color: var(--accent-color);
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: var(--light-bg);
+            min-width: 250px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            z-index: 1001;
+        }
+        .dropdown-toggle {
+            font-size: 16px;
+            white-space: nowrap;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .dropdown-menu a {
+            color: var(--dark-text);
+            padding: 0.75rem 1rem;
+            display: block;
+            border-bottom: 1px solid #eee;
+        }
+
+        .dropdown-menu a:hover {
+            background-color: var(--accent-color);
+            color: var(--light-text);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background-color: var(--light-text);
+            border-radius: 2px;
+            transition: var(--transition);
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(rgba(73, 89, 102, 0.9), rgba(73, 89, 102, 0.9)),
+                        url(avtofoto.webp);
+            background-size: cover;
+            background-position: center;
+            padding: 4rem 0 2rem;
+            text-align: center;
+        }
+
+        .page-header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .page-header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--light-text);
+        }
+
+        .breadcrumb {
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 1rem;
+        }
+
+        .breadcrumb a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        /* Main Content */
+        .main-content {
+            background-color: var(--light-bg);
+            color: var(--dark-text);
+            padding: 3rem 0;
+        }
+
+        .container {
+            padding: 0 20px;
+        }
+
+        .section {
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-color), var(--primary-color));
+            border-radius: 2px;
+        }
+
+        /* Search Form */
+        .search-form {
+            background: var(--light-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--table-border);
+            margin-bottom: 2rem;
+        }
+
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            align-items: center;
+        }
+
+        .form-group {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--table-border);
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(245, 147, 53, 0.1);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background-color: var(--accent-color);
+            color: var(--light-text);
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        .btn:hover {
+            background-color: #d97a24;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: var(--primary-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: #3a4a56;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--accent-color);
+            color: var(--light-text);
+        }
+
+        /* Table Styles */
+        .table-container {
+            overflow-x: auto;
+            background: var(--light-bg);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--table-border);
+            margin-bottom: 2rem;
+        }
+
+        .modern-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            min-width: 1200px;
+        }
+
+        .modern-table th {
+            background-color: var(--table-header-bg);
+            color: var(--light-text);
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .modern-table th a {
+            color: var(--light-text);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .modern-table th a:hover {
+            color: var(--accent-color);
+        }
+
+        .modern-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--table-border);
+            color: var(--dark-text);
+            vertical-align: middle;
+        }
+
+        .modern-table tr:hover td {
+            background-color: rgba(245, 147, 53, 0.05);
+        }
+
+        .modern-table tr:nth-child(even) td {
+            background-color: rgba(73, 89, 102, 0.02);
+        }
+
+        .modern-table tr:nth-child(odd) td {
+            background-color: var(--light-bg);
+        }
+
+        .modern-table td:last-child,
+        .modern-table td:nth-last-child(2) {
+            white-space: nowrap;
+            text-align: center;
+        }
+
+        .modern-table a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .modern-table a:hover {
+            color: #d97a24;
+            text-decoration: underline;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 2rem 0;
+        }
+
+        .pagination a,
+        .pagination span {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--table-border);
+            border-radius: 6px;
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .pagination a:hover {
+            background-color: var(--accent-color);
+            color: var(--light-text);
+            border-color: var(--accent-color);
+        }
+
+        .pagination .active {
+            background-color: var(--accent-color);
+            color: var(--light-text);
+            border-color: var(--accent-color);
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 2rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .back-link:hover {
+            color: var(--accent-color);
+        }
+
+
+        /* Accessibility Toggle */
+        .accessibility-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .accessibility-toggle img {
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .accessibility-toggle img:hover {
+            transform: scale(1.1);
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, #3a4a56 0%, var(--primary-color) 100%);
+            color: var(--light-text);
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section {
+            text-align: center;
+        }
+
+        .footer-section img {
+            height: 35px;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: #95aabb;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-section a:hover {
+            color: var(--accent-color);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: #95aabb;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .main-nav {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background-color: var(--primary-color);
+                flex-direction: column;
+                padding: 1rem;
+                gap: 0.5rem;
+            }
+
+            .main-nav.active {
+                display: flex;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-container {
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+
+            .form-row {
+                flex-direction: column;
+            }
+
+            .form-group {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .modern-table {
+                font-size: 0.85rem;
+            }
+
+            .modern-table th,
+            .modern-table td {
+                padding: 0.75rem 0.5rem;
+            }
+
+            .table-container {
+                border-radius: 8px;
+            }
+
+            .pagination a,
+            .pagination span {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .page-header {
+                padding: 2rem 0 1rem;
+            }
+
+            .search-form {
+                padding: 1.5rem;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .pagination {
+                gap: 0.25rem;
+            }
+        }
+
+        /* Accessibility Mode */
+        .accessibility-mode {
+            font-size: 18px !important;
+            line-height: 1.8 !important;
+        }
+
+        .accessibility-mode * {
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3) !important;
+        }
+
+        .accessibility-mode .modern-table th,
+        .accessibility-mode .modern-table td {
+            padding: 1rem !important;
+        }
+
+        .accessibility-mode .form-control {
+            padding: 1rem !important;
+            font-size: 1.1rem !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">
+                <img src="logotip.png" alt="Университет Группы АВТОВАЗ">
+            </div>
+            
+            <nav class="main-nav" id="mainNav">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Сведения об образовательной организации</a>
+                    <div class="dropdown-menu">
+                        <a href="/Information/Index">Основные сведения</a>
+                        <a href="perechenprogram.html">Структура и органы управления</a>
+                        <a href="documenti.html">Документы</a>
+                        <a href="obrazovanie.html">Образование</a>
+                        <a href="obrazstandart.html">Образовательные стандарты</a>
+                        <a href="Untitled-1.html">Руководство. Педагогический состав</a>
+                        <a href="Mattexobes.html">Материально-техническое обеспечение</a>
+                        <a href="https://cu-avtovaz.ru/Information/Scholarships">Стипендии и материальная поддержка</a>
+                        <a href="https://cu-avtovaz.ru/Information/PaidEducationalServices">Платные образовательные услуги</a>
+                        <a href="https://cu-avtovaz.ru/Information/FinancesReport">Финансово-хозяйственная деятельность</a>
+                        <a href="https://cu-avtovaz.ru/Information/Vacancies">Вакантные места</a>
+                        <a href="https://cu-avtovaz.ru/Information/Habitat">Доступная среда</a>
+                        <a href="https://cu-avtovaz.ru/Information/InternationalCooperation">Международное сотрудничество</a>
+                    </div>
+                </li>
+                
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Обучение</a>
+                    <div class="dropdown-menu">
+                       <a href="https://cu-avtovaz.ru/ApplicationForTraining/Index">Заявка на обучение</a>
+                        <a href="schedule.pdf">Расписание занятий</a>
+                        <a href="Untitled-2.html">График обучения</a>
+                        <a href="Untitled-3.html">Перечень программ</a>
+                        <a href="http://olimp.cu-avtovaz.ru/">Дистанционное обучение "ОЛИМПОКС"</a>
+                        <a href="https://lms.cu-avtovaz.ru/cabinet/login">Дистанционное обучение"УЧИ.ПРО"</a>
+                        <a href="https://cu-avtovaz.ru/Survey">Анкетирование</a>
+                    </div>
+                </li>
+                
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Новости</a>
+                    <div class="dropdown-menu">
+                        <a href="https://cu-avtovaz.ru/News/Index">Новости</a>
+                    </div>
+                </li>
+                
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Об Университете</a>
+                    <div class="dropdown-menu">
+                       <a href="https://cu-avtovaz.ru/About/Contacts">Контакты</a>
+                        <a href="https://cu-avtovaz.ru/About">История Университета</a>
+                        <a href="https://cu-avtovaz.ru/About/Map">Схема проезда</a>
+                        <a href="https://cu-avtovaz.ru/About/Antiterror">Антитеррористическая безопасность</a>
+                        <a href="http://www.lada.ru" target="_blank">АО «АВТОВАЗ»</a>
+                    </div>
+                </li>
+                
+                <li class="dropdown-toggle">
+                    <a href="https://cu-avtovaz.ru/ApplicationForTraining/Index?TypeLetter=0">Задать вопрос</a>
+                </li>
+            </nav>
+            
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="page-header-content">
+            <h1>График обучения</h1>
+            <div class="breadcrumb">
+                <a href="/Home">Главная</a> &raquo; <a href="/TrainingSchedule">График обучения</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <section class="section">
+                <!-- Search Form -->
+                <form action="/TrainingSchedule" method="get" class="search-form">
+                    <input id="order" name="order" type="hidden" value="1">
+                    <input id="page" name="page" type="hidden" value="">
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="napr">Направление</label>
+                            <select class="form-control" id="napr" name="napr">
+                                <option value="-1">Все направления</option>
+                                <option value="0">?</option>
+                                <option value="15">Автоматизированное проектирование</option>
+                                <option value="7">Автоматизированные системы управления технологическими процессами</option>
+                                <option value="34">Закупочные компетенции</option>
+                                <option value="26">Инжиниринговые компетенции</option>
+                                <option value="23">Иностранные языки</option>
+                                <option value="8">Информационные технологии</option>
+                                <option value="30">КПНР</option>
+                                <option value="6">Обеспечение работоспособности оборудования</option>
+                                <option value="9">Объекты, поднадзорные органам Ростехнадзора</option>
+                                <option value="4">Охрана труда</option>
+                                <option value="19">Прочие</option>
+                                <option value="14">Транспортные средства</option>
+                                <option value="3">Управление качеством продукции</option>
+                                <option value="1">Управление персоналом</option>
+                                <option value="99">Экологическая безопасность</option>
+                                <option value="2">Экономика и финансово-хозяйственная деятельность</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="find">Поиск по номеру / наименованию курса</label>
+                            <input class="form-control" id="find" name="find" type="text" value="">
+                        </div>
+                        <div class="form-group" style="flex: 0 0 auto;">
+                            <label>&nbsp;</label>
+                            <button type="submit" name="action" value="set" class="btn">Найти</button>
+                        </div>
+                        <div class="form-group" style="flex: 0 0 auto;">
+                            <label>&nbsp;</label>
+                            <button type="button" class="btn btn-secondary" onclick="window.location.href='/TrainingSchedule?order=1';">Сбросить поиск</button>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- Table -->
+                <div class="table-container">
+                    <table class="modern-table">
+                        <thead>
+                            <tr>
+                                <th><a href="/TrainingSchedule?order=1">Дата начала обучения</a></th>
+                                <th><a href="/TrainingSchedule?order=2">Дата окончания обучения</a></th>
+                                <th><a href="/TrainingSchedule?order=3">№ учебной программы</a></th>
+                                <th><a href="/TrainingSchedule?order=4">Наименование учебной программы</a></th>
+                                <th><a href="/TrainingSchedule?order=7">Направление</a></th>
+                                <th><a href="/TrainingSchedule?order=5">Часы</a></th>
+                                <th><a href="/TrainingSchedule?order=6">Стоимость, руб.</a></th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>02/03/2026</td>
+                                <td>09/07/2026</td>
+                                <td>36458</td>
+                                <td>Подготовка водителей погрузчика категории "С"</td>
+                                <td>КПНР</td>
+                                <td>680</td>
+                                <td>35700</td>
+                                <td><a href="/TrainingSchedule/ShowTemPlan?rsnprogr=36458">Содержание курса</a></td>
+                                <td><a href="/ApplicationForTraining?rsnprogr=36458&amp;DateTime1=02.03.2026&amp;DateTime2=09.07.2026">Заявка на обучение</a></td>
+                            </tr>
+                            <tr>
+                                <td>23/03/2026</td>
+                                <td>01/09/2026</td>
+                                <td>35770</td>
+                                <td>Профессиональное обучение по программе подготовки рабочих по профессии "Машинист крана (крановщик)"</td>
+                                <td>КПНР</td>
+                                <td>784</td>
+                                <td>38000</td>
+                                <td><a href="/TrainingSchedule/ShowTemPlan?rsnprogr=35770">Содержание курса</a></td>
+                                <td><a href="/ApplicationForTraining?rsnprogr=35770&amp;DateTime1=23.03.2026&amp;DateTime2=01.09.2026">Заявка на обучение</a></td>
+                            </tr>
+                            <tr>
+                                <td>06/04/2026</td>
+                                <td>30/06/2026</td>
+                                <td>35579</td>
+                                <td>Профессиональное обучение по программе подготовки рабочих по профессии "Плавильщик металла и сплавов"</td>
+                                <td>КПНР</td>
+                                <td>440</td>
+                                <td>15800</td>
+                                <td><a href="/TrainingSchedule/ShowTemPlan?rsnprogr=35579">Содержание курса</a></td>
+                                <td><a href="/ApplicationForTraining?rsnprogr=35579&amp;DateTime1=06.04.2026&amp;DateTime2=30.06.2026">Заявка на обучение</a></td>
+                            </tr>
+                            <tr>
+                                <td>14/04/2026</td>
+                                <td>16/07/2026</td>
+                                <td>36457</td>
+                                <td>Подготовка водителей аккумуляторного погрузчика категории "В"</td>
+                                <td>КПНР</td>
+                                <td>480</td>
+                                <td>26800</td>
+                                <td><a href="/TrainingSchedule/ShowTemPlan?rsnprogr=36457">Содержание курса</a></td>
+                                <td><a href="/ApplicationForTraining?rsnprogr=36457&amp;DateTime1=14.04.2026&amp;DateTime2=16.07.2026">Заявка на обучение</a></td>
+                            </tr>
+                            <tr>
+                                <td>12/05/2026</td>
+                                <td>25/06/2026</td>
+                                <td>35575</td>
+                                <td>Профессиональное обучение по программе подготовки рабочих по профессии "Наладчик кузнечно-прессового оборудования"</td>
+                                <td>КПНР</td>
+                                <td>263</td>
+                                <td>14800</td>
+                                <td><a href="/TrainingSchedule/ShowTemPlan?rsnprogr=35575">Содержание курса</a></td>
+                                <td><a href="/ApplicationForTraining?rsnprogr=35575&amp;DateTime1=12.05.2026&amp;DateTime2=25.06.2026">Заявка на обучение</a></td>
+                            </tr>
+                            <tr>
+                                <td>12/05/2026</td>
+                                <td>29/06/2026</td>
+                                <td>35617</td>
+                                <td>Профессиональное обучение по программе подготовки рабочих по профессии "Термист"</td>
+                                <td>КПНР</td>
+                                <td>276</td>
+                                <td>13200</td>
+                                <td><a href="/TrainingSchedule/ShowTemPlan?rsnprogr=35617">Содержание курса</a></td>
+                                <td><a href="/ApplicationForTraining?rsnprogr=35617&amp;DateTime1=12.05.2026&amp;DateTime2=29.06.2026">Заявка на обучение</a></td>
+                            </tr>
+                            <tr>
+                                <td>12/05/2026</td>
+                                <td>03/07/2026</td>
+                                <td>35616</td>
+                                <td>Профессиональное обучение по программе подготовки рабочих по профессии "Термист на установках ТВЧ"</td>
+                                <td>КПНР</td>
+                                <td>310</td>
+                                <td>16800</td>
+                                <td><a href="/TrainingSchedule/ShowTemPlan?rsnprogr=35616">Содержание курса</a></td>
+                                <td><a href="/ApplicationForTraining?rsnprogr=35616&amp;DateTime1=12.05.2026&amp;DateTime2=03.07.2026">Заявка на обучение</a></td>
+                            </tr>
+                            <tr>
+                                <td>12/05/2026</td>
+                                <td>10/07/2026</td>
+                                <td>35564</td>
+                                <td>Профессиональное обучение по программе подготовки рабочих по профессии "Слесарь-ремонтник"</td>
+                                <td>КПНР</td>
+                                <td>351</td>
+                                <td>20500</td>
+                                <td><a href="/TrainingSchedule/ShowTemPlan?rsnprogr=35564">Содержание курса</a></td>
+                                <td><a href="/ApplicationForTraining?rsnprogr=35564&amp;DateTime1=12.05.2026&amp;DateTime2=10.07.2026">Заявка на обучение</a></td>
+                            </tr>
+                            <tr>
+                                <td>12/05/2026</td>
+                                <td>10/07/2026</td>
+                                <td>35574</td>
+                                <td>Профессиональное обучение по программе подготовки рабочих по профессии "Наладчик автоматических линий и агрегатных станков"</td>
+                                <td>КПНР</td>
+                                <td>350</td>
+                                <td>21100</td>
+                                <td><a href="/TrainingSchedule/ShowTemPlan?rsnprogr=35574">Содержание курса</a></td>
+                                <td><a href="/ApplicationForTraining?rsnprogr=35574&amp;DateTime1=12.05.2026&amp;DateTime2=10.07.2026">Заявка на обучение</a></td>
+                            </tr>
+                            <tr>
+                                <td>12/05/2026</td>
+                                <td>14/07/2026</td>
+                                <td>35609</td>
+                                <td>Профессиональное обучение по программе подготовки рабочих по профессии "Оператор автоматических и полуавтоматических линий станков и установок"</td>
+                                <td>КПНР</td>
+                                <td>362</td>
+                                <td>15000</td>
+                                <td><a href="/TrainingSchedule/ShowTemPlan?rsnprogr=35609">Содержание курса</a></td>
+                                <td><a href="/ApplicationForTraining?rsnprogr=35609&amp;DateTime1=12.05.2026&amp;DateTime2=14.07.2026">Заявка на обучение</a></td>
+                            </tr>
+                            <tr>
+                                <td>13/05/2026</td>
+                                <td>03/07/2026</td>
+                                <td>35550</td>
+                                <td>Профессиональное обучение по программе подготовки рабочих по профессии "Электрогазосварщик"</td>
+                                <td>КПНР</td>
+                                <td>298</td>
+                                <td>34900</td>
+                                <td><a href="/TrainingSchedule/ShowTemPlan?rsnprogr=35550">Содержание курса</a></td>
+                                <td><a href="/ApplicationForTraining?rsnprogr=35550&amp;DateTime1=13.05.2026&amp;DateTime2=03.07.2026">Заявка на обучение</a></td>
+                            </tr>
+                            <tr>
+                                <td>13/05/2026</td>
+                                <td>26/08/2026</td>
+                                <td>36457</td>
+                                <td>Подготовка водителей аккумуляторного погрузчика категории "В"</td>
+                                <td>КПНР</td>
+                                <td>480</td>
+                                <td>26800</td>
+                                <td><a href="/TrainingSchedule/ShowTemPlan?rsnprogr=36457">Содержание курса</a></td>
+                                <td><a href="/ApplicationForTraining?rsnprogr=36457&amp;DateTime1=13.05.2026&amp;DateTime2=26.08.2026">Заявка на обучение</a></td>
+                            </tr>
+                            <tr>
+                                <td>18/05/2026</td>
+                                <td>30/06/2026</td>
+                                <td>35419</td>
+                                <td>Профессиональное обучение по программе подготовки рабочих по профессии "Литейщик на машинах для литья под давлением"</td>
+                                <td>КПНР</td>
+                                <td>263</td>
+                                <td>18400</td>
+                                <td><a href="/TrainingSchedule/ShowTemPlan?rsnprogr=35419">Содержание курса</a></td>
+                                <td><a href="/ApplicationForTraining?rsnprogr=35419&amp;DateTime1=18.05.2026&amp;DateTime2=30.06.2026">Заявка на обучение</a></td>
+                            </tr>
+                            <tr>
+                                <td>18/05/2026</td>
+                                <td>02/07/2026</td>
+                                <td>36336</td>
+                                <td>Профессиональное обучение по программе подготовки рабочих по профессии "Шихтовщик"</td>
+                                <td>КПНР</td>
+                                <td>264</td>
+                                <td>16800</td>
+                                <td><a href="/TrainingSchedule/ShowTemPlan?rsnprogr=36336">Содержание курса</a></td>
+                                <td><a href="/ApplicationForTraining?rsnprogr=36336&amp;DateTime1=18.05.2026&amp;DateTime2=02.07.2026">Заявка на обучение</a></td>
+                            </tr>
+                            <tr>
+                                <td>18/05/2026</td>
+                                <td>02/07/2026</td>
+                                <td>36359</td>
+                                <td>Профессиональное обучение по программе подготовки рабочих по профессии "Маляр"</td>
+                                <td>КПНР</td>
+                                <td>264</td>
+                                <td>16900</td>
+                                <td><a href="/TrainingSchedule/ShowTemPlan?rsnprogr=36359">Содержание курса</a></td>
+                                <td><a href="/ApplicationForTraining?rsnprogr=36359&amp;DateTime1=18.05.2026&amp;DateTime2=02.07.2026">Заявка на обучение</a></td>
+                            </tr>
+                            <tr>
+                                <td>18/05/2026</td>
+                                <td>02/07/2026</td>
+                                <td>36361</td>
+                                <td>Профессиональное обучение по программе подготовки рабочих по профессии "Обрубщик"</td>
+                                <td>КПНР</td>
+                                <td>264</td>
+                                <td>15800</td>
+                                <td><a href="/TrainingSchedule/ShowTemPlan?rsnprogr=36361">Содержание курса</a></td>
+                                <td><a href="/ApplicationForTraining?rsnprogr=36361&amp;DateTime1=18.05.2026&amp;DateTime2=02.07.2026">Заявка на обучение</a></td>
+                            </tr>
+                            <tr>
+                                <td>18/05/2026</td>
+                                <td>03/07/2026</td>
+                                <td>35885</td>
+                                <td>Профессиональное обучение по программе подготовки рабочих по профессии "Стропальщик"</td>
+                                <td>КПНР</td>
+                                <td>258</td>
+                                <td>10100</td>
+                                <td><a href="/TrainingSchedule/ShowTemPlan?rsnprogr=35885">Содержание курса</a></td>
+                                <td><a href="/ApplicationForTraining?rsnprogr=35885&amp;DateTime1=18.05.2026&amp;DateTime2=03.07.2026">Заявка на обучение</a></td>
+                            </tr>
+                            <tr>
+                                <td>18/05/2026</td>
+                                <td>19/08/2026</td>
+                                <td>35581</td>
+                                <td>Профессиональное обучение по программе подготовки рабочих по профессии "Кузнец-штамповщик"</td>
+                                <td>КПНР</td>
+                                <td>417</td>
+                                <td>13400</td>
+                                <td><a href="/TrainingSchedule/ShowTemPlan?rsnprogr=35581">Содержание курса</a></td>
+                                <td><a href="/ApplicationForTraining?rsnprogr=35581&amp;DateTime1=18.05.2026&amp;DateTime2=19.08.2026">Заявка на обучение</a></td>
+                            </tr>
+                            <tr>
+                                <td>25/05/2026</td>
+                                <td>09/07/2026</td>
+                                <td>35554</td>
+                                <td>Профессиональное обучение по программе подготовки рабочих по профессии "Заливщик металла"</td>
+                                <td>КПНР</td>
+                                <td>266</td>
+                                <td>12200</td>
+                                <td><a href="/TrainingSchedule/ShowTemPlan?rsnprogr=35554">Содержание курса</a></td>
+                                <td><a href="/ApplicationForTraining?rsnprogr=35554&amp;DateTime1=25.05.2026&amp;DateTime2=09.07.2026">Заявка на обучение</a></td>
+                            </tr>
+                            <tr>
+                                <td>26/05/2026</td>
+                                <td>08/09/2026</td>
+                                <td>36457</td>
+                                <td>Подготовка водителей аккумуляторного погрузчика категории "В"</td>
+                                <td>КПНР</td>
+                                <td>480</td>
+                                <td>26800</td>
+                                <td><a href="/TrainingSchedule/ShowTemPlan?rsnprogr=36457">Содержание курса</a></td>
+                                <td><a href="/ApplicationForTraining?rsnprogr=36457&amp;DateTime1=26.05.2026&amp;DateTime2=08.09.2026">Заявка на обучение</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Pagination -->
+                <div class="pagination">
+                    <a href="/TrainingSchedule?order=1&amp;page=1" class="active">1</a>
+                    <a href="/TrainingSchedule?order=1&amp;page=2">2</a>
+                    <a href="/TrainingSchedule?order=1&amp;page=3">3</a>
+                    <a href="/TrainingSchedule?order=1&amp;page=4">4</a>
+                    <a href="/TrainingSchedule?order=1&amp;page=5">5</a>
+                    <a href="/TrainingSchedule?order=1&amp;page=6">6</a>
+                    <a href="/TrainingSchedule?order=1&amp;page=7">7</a>
+                    <a href="/TrainingSchedule?order=1&amp;page=8">8</a>
+                    <a href="/TrainingSchedule?order=1&amp;page=9">9</a>
+                    <a href="/TrainingSchedule?order=1&amp;page=10">10</a>
+                    <a href="/TrainingSchedule?order=1&amp;page=11">11</a>
+                    <a href="/TrainingSchedule?order=1&amp;page=12">12</a>
+                    <a href="/TrainingSchedule?order=1&amp;page=13">13</a>
+                    <a href="/TrainingSchedule?order=1&amp;page=14">14</a>
+                    <a href="/TrainingSchedule?order=1&amp;page=15">15</a>
+                    <a href="/TrainingSchedule?order=1&amp;page=16">16</a>
+                    <a href="/TrainingSchedule?order=1&amp;page=17">17</a>
+                    <a href="/TrainingSchedule?order=1&amp;page=18">18</a>
+                    <a href="/TrainingSchedule?order=1&amp;page=19">19</a>
+                    <a href="/TrainingSchedule?order=1&amp;page=20">20</a>
+                    <a href="/TrainingSchedule?order=1&amp;page=21">21</a>
+                    <a href="/TrainingSchedule?order=1&amp;page=22">22</a>
+                    <a href="/TrainingSchedule?order=1&amp;page=23">23</a>
+                    <a href="/TrainingSchedule?order=1&amp;page=24">24</a>
+                    <a href="/TrainingSchedule?order=1&amp;page=25">25</a>
+                    <a href="/TrainingSchedule?order=1&amp;page=26">26</a>
+                    <a href="/TrainingSchedule?order=1&amp;page=27">27</a>
+                    <a href="/TrainingSchedule?order=1&amp;page=28">28</a>
+                    <a href="/TrainingSchedule?order=1&amp;page=29">29</a>
+                    <a href="/TrainingSchedule?order=1&amp;page=30">30</a>
+                    <a href="/TrainingSchedule?order=1&amp;page=31">31</a>
+                    <a href="/TrainingSchedule?order=1&amp;page=32">32</a>
+                    <a href="/TrainingSchedule?order=1&amp;page=33">33</a>
+                    <a href="/TrainingSchedule?order=1&amp;page=34">34</a>
+                    <a href="/TrainingSchedule?order=1&amp;page=35">35</a>
+                    <a href="/TrainingSchedule?order=1&amp;page=36">36</a>
+                    <a href="/TrainingSchedule?order=1&amp;page=37">37</a>
+                    <a href="/TrainingSchedule?order=1&amp;page=38">38</a>
+                    <a href="/TrainingSchedule?order=1&amp;page=39">39</a>
+                    <a href="/TrainingSchedule?order=1&amp;page=40">40</a>
+                </div>
+
+                <div style="text-align: center; margin-top: 2rem;">
+                    <a href="#" onclick="history.back();return false;" class="back-link">Вернуться назад</a>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <img src="map.png" alt="Адрес">
+                    <p>445024, Российская Федерация, Самарская область, г. Тольятти, Южное шоссе, д.121</p>
+                </div>
+                <div class="footer-section">
+                    <img src="phone.png" alt="Телефон">
+                    <p>(8482) 73-88-22</p>
+                </div>
+                <div class="footer-section">
+                    <img src="mail.png" alt="Почта">
+                    <p><a href="mailto:mail@cu-avtovaz.ru">mail@cu-avtovaz.ru</a></p>
+                </div>
+                <div class="footer-section">
+                    <img src="vk.png" alt="VK">
+                    <p><a href="https://vk.com/public211289289" target="_blank">Университет в VK</a></p>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>Университет Группы «АВТОВАЗ» © 2026. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+   
+
+    <!-- Accessibility Toggle -->
+    <button class="accessibility-toggle" onclick="toggleAccessibility()" aria-label="Версия для слабовидящих">
+        <img src="/Content/images/eyes_orange.png" alt="Версия для слабовидящих">
+    </button>
+
+    <script>
+        // Mobile Navigation
+        const hamburger = document.getElementById('hamburger');
+        const mainNav = document.getElementById('mainNav');
+        
+        hamburger.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+        });
+
+     
+    
+
+        // Accessibility Toggle
+        function toggleAccessibility() {
+            document.body.classList.toggle('accessibility-mode');
+            const style = document.createElement('style');
+            style.id = 'accessibility-styles';
+            style.textContent = `
+                .accessibility-mode {
+                    font-size: 18px !important;
+                    line-height: 1.8 !important;
+                }
+                .accessibility-mode * {
+                    text-shadow: 1px 1px 2px rgba(0,0,0,0.3) !important;
+                }
+                .accessibility-mode .modern-table th,
+                .accessibility-mode .modern-table td {
+                    padding: 1rem !important;
+                }
+                .accessibility-mode .form-control {
+                    padding: 1rem !important;
+                    font-size: 1.1rem !important;
+                }
+            `;
+            document.head.appendChild(style);
+        }
+
+        // Direction select change handler
+        document.getElementById('napr').addEventListener('change', function() {
+            var id = this.value;
+            window.location.href = "http://" + document.location.host + "/TrainingSchedule/Index?napr=" + id;
+        });
+
+        // Table hover effects
+        document.querySelectorAll('.modern-table tr').forEach(row => {
+            row.addEventListener('mouseenter', () => {
+                row.style.backgroundColor = 'rgba(245, 147, 53, 0.05)';
+            });
+            row.addEventListener('mouseleave', () => {
+                const isEven = Array.from(row.parentNode.children).indexOf(row) % 2 === 1;
+                row.style.backgroundColor = isEven ? 'rgba(73, 89, 102, 0.02)' : 'var(--light-bg)';
+            });
+        });
+
+        // Pagination active state
+        document.querySelectorAll('.pagination a').forEach(link => {
+            if (link.href.includes('page=1')) {
+                link.classList.add('active');
+            }
+        });
+    </script>
+</body>
+</html>

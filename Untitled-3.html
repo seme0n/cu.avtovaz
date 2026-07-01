@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Перечень программ - Университет Группы «АВТОВАЗ»</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+           --primary-color: rgb(77, 89, 100);
+            --accent-color: rgb(245, 103, 30);
+            --light-bg: rgb(248, 249, 250);
+            --dark-text: rgb(51, 51, 51);
+            --light-text: rgb(255, 255, 255);
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --table-header-bg: #3a4a56;
+            --warning-color: #ffc107;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: "Inter", sans-serif;
+            font-optical-sizing: auto;
+            background-color: var(--primary-color);
+            color: var(--light-text);
+            line-height: 1.6;
+            background-image: url('../../Content/_Shared/fon.png');
+            background-repeat: repeat-y;
+            background-position: left top;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #3a4a56 100%);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo img { 
+            height: 160px; 
+        }
+
+        /* Navigation */
+        .main-nav { display: flex; list-style: none; gap: 1.5rem; }
+        .main-nav a { color: var(--light-text); text-decoration: none; padding: 0.5rem 1rem; border-radius: 4px; }
+        .main-nav a:hover { background-color: var(--accent-color); }
+
+        .dropdown { position: relative; }
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: var(--light-bg);
+            min-width: 250px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1001;
+        }
+        .dropdown-toggle {
+            font-size: 16px;
+            white-space: nowrap;
+        }
+        .dropdown:hover .dropdown-menu { opacity: 1; visibility: visible; }
+        .dropdown-menu a { color: var(--dark-text); padding: 0.75rem 1rem; display: block; border-bottom: 1px solid #eee; }
+        .dropdown-menu a:hover { background-color: var(--accent-color); color: var(--light-text); }
+
+        .hamburger { display: none; flex-direction: column; cursor: pointer; gap: 5px; }
+        .hamburger span { width: 25px; height: 3px; background: var(--light-text); border-radius: 2px; }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(rgba(73, 89, 102, 0.9), rgba(73, 89, 102, 0.9)),
+                        url(avtofoto.webp);
+            background-size: cover;
+            background-position: center;
+            padding: 4rem 0 2rem;
+            text-align: center;
+        }
+        .page-header h1 { font-size: 2.2rem; color: var(--light-text); }
+        .breadcrumb { color: rgba(255,255,255,0.8); margin-top: 1rem; }
+        .breadcrumb a { color: var(--accent-color); text-decoration: none; }
+
+        /* Main Content */
+        .main-content { background: var(--light-bg); color: var(--dark-text); padding: 3rem 0; }
+        .container { padding: 0 20px; }
+
+        /* Search Form */
+        .search-form {
+            background: var(--light-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            border: 1px solid #e0e0e0;
+            margin-bottom: 2rem;
+        }
+        .form-row { display: flex; flex-wrap: wrap; gap: 1.5rem; margin-bottom: 1.5rem; align-items: center; }
+        .form-group { flex: 1; min-width: 250px; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--primary-color); }
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+        .form-control:focus { outline: none; border-color: var(--accent-color); box-shadow: 0 0 0 3px rgba(245,147,53,0.1); }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: var(--accent-color);
+            color: var(--light-text);
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        .btn:hover { background: #d97a24; transform: translateY(-2px); }
+        .btn-secondary { background: var(--primary-color); }
+        .btn-secondary:hover { background: #3a4a56; }
+        .btn-success { background: #28a745; }
+        .btn-info { background: #17a2b8; }
+
+        .action-buttons { display: flex; justify-content: flex-end; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+
+        /* Warning Box */
+        .warning-box {
+            background: rgba(255,193,7,0.1);
+            border-left: 4px solid var(--warning-color);
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Table */
+        .table-container {
+            overflow-x: auto;
+            background: var(--light-bg);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            border: 1px solid #e0e0e0;
+            margin-bottom: 2rem;
+        }
+        .modern-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            min-width: 1200px;
+        }
+        .modern-table th {
+            background: var(--table-header-bg);
+            color: var(--light-text);
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+        }
+        .modern-table th a { color: var(--light-text); text-decoration: none; }
+        .modern-table th a:hover { color: var(--accent-color); }
+        .modern-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #e0e0e0;
+            color: var(--dark-text);
+        }
+        .modern-table tr:hover td { background: rgba(245,147,53,0.05); }
+        .modern-table tr:nth-child(even) td { background: rgba(73,89,102,0.02); }
+        .modern-table td:last-child, .modern-table td:nth-last-child(2) { white-space: nowrap; text-align: center; }
+        .modern-table a { color: var(--accent-color); text-decoration: none; }
+        .modern-table a:hover { color: #d97a24; text-decoration: underline; }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 2rem 0;
+        }
+        .pagination a {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        .pagination a:hover { background: var(--accent-color); color: var(--light-text); border-color: var(--accent-color); }
+        .pagination .active { background: var(--accent-color); color: var(--light-text); border-color: var(--accent-color); }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 2rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .back-link:hover { color: var(--accent-color); }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, #3a4a56 0%, var(--primary-color) 100%);
+            color: var(--light-text);
+            padding: 3rem 0 1rem;
+        }
+        .footer-content { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-bottom: 2rem; }
+        .footer-section { text-align: center; }
+        .footer-section img { height: 35px; margin-bottom: 0.5rem; }
+        .footer-section a { color: #95aabb; text-decoration: none; }
+        .footer-section a:hover { color: var(--accent-color); }
+        .footer-bottom { text-align: center; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.1); font-size: 0.9rem; color: #95aabb; }
+
+        /* Accessibility */
+        .accessibility-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        .accessibility-toggle img { width: 40px; height: 40px; cursor: pointer; }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .main-nav { display: none; }
+            .main-nav.active { display: flex; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: var(--primary-color); padding: 1rem; }
+            .hamburger { display: flex; }
+            .form-row { flex-direction: column; }
+            .form-group { width: 100%; }
+            .action-buttons { justify-content: center; }
+        }
+        @media (max-width: 768px) {
+            .page-header h1 { font-size: 1.8rem; }
+            .modern-table { font-size: 0.85rem; }
+            .modern-table th, .modern-table td { padding: 0.75rem 0.5rem; }
+            .pagination a { padding: 0.4rem 0.8rem; font-size: 0.9rem; }
+            .action-buttons { flex-direction: column; }
+            .btn { width: 100%; }
+        }
+        @media (max-width: 576px) {
+            .page-header { padding: 2rem 0 1rem; }
+            .search-form { padding: 1.5rem; }
+            .footer-content { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Navigation -->
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo"><img src="logotip.png" alt="Университет Группы АВТОВАЗ"></div>
+            <nav class="main-nav" id="mainNav">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Сведения об образовательной организации</a>
+                    <div class="dropdown-menu">
+                       <a href="/Information/Index">Основные сведения</a>
+                        <a href="perechenprogram.html">Структура и органы управления</a>
+                        <a href="documenti.html">Документы</a>
+                        <a href="obrazovanie.html">Образование</a>
+                        <a href="obrazstandart.html">Образовательные стандарты</a>
+                        <a href="Untitled-1.html">Руководство. Педагогический состав</a>
+                        <a href="Mattexobes.html">Материально-техническое обеспечение</a>
+                        <a href="https://cu-avtovaz.ru/Information/Scholarships">Стипендии и материальная поддержка</a>
+                        <a href="https://cu-avtovaz.ru/Information/PaidEducationalServices">Платные образовательные услуги</a>
+                        <a href="https://cu-avtovaz.ru/Information/FinancesReport">Финансово-хозяйственная деятельность</a>
+                        <a href="https://cu-avtovaz.ru/Information/Vacancies">Вакантные места</a>
+                        <a href="https://cu-avtovaz.ru/Information/Habitat">Доступная среда</a>
+                        <a href="https://cu-avtovaz.ru/Information/InternationalCooperation">Международное сотрудничество</a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Обучение</a>
+                    <div class="dropdown-menu">
+                       <a href="https://cu-avtovaz.ru/ApplicationForTraining/Index">Заявка на обучение</a>
+                        <a href="schedule.pdf">Расписание занятий</a>
+                        <a href="Untitled-2.html">График обучения</a>
+                        <a href="Untitled-3.html">Перечень программ</a>
+                        <a href="http://olimp.cu-avtovaz.ru/">Дистанционное обучение "ОЛИМПОКС"</a>
+                        <a href="https://lms.cu-avtovaz.ru/cabinet/login">Дистанционное обучение"УЧИ.ПРО"</a>
+                        <a href="https://cu-avtovaz.ru/Survey">Анкетирование</a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Новости</a>
+                    <div class="dropdown-menu"><a href="https://cu-avtovaz.ru/News/Index">Новости</a></div>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Об Университете</a>
+                    <div class="dropdown-menu">
+                        <a href="https://cu-avtovaz.ru/About/Contacts">Контакты</a>
+                        <a href="https://cu-avtovaz.ru/About">История Университета</a>
+                        <a href="https://cu-avtovaz.ru/About/Map">Схема проезда</a>
+                        <a href="https://cu-avtovaz.ru/About/Antiterror">Антитеррористическая безопасность</a>
+                        <a href="http://www.lada.ru" target="_blank">АО «АВТОВАЗ»</a>
+                    </div>
+                </li>
+                <li class="dropdown-toggle">
+                    <a href="https://cu-avtovaz.ru/ApplicationForTraining/Index?TypeLetter=0">Задать вопрос</a>
+                </li>
+            </nav>
+            <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+            <h1>Перечень программ</h1>
+            <div class="breadcrumb"><a href="/Home">Главная</a> &raquo; <a href="/ProgramsList">Перечень программ</a></div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Search Form -->
+            <form action="/ProgramsList" method="post" class="search-form">
+                <input name="__RequestVerificationToken" type="hidden" value="74Wf3LEM7ah2UikNPrGals0K0DEY79v2sA2tVFW2d0yJlCHosooOVmQNgRqE-JGnpxNmHgSLH0pyKKfwg4eMmhCdSeKm717DM6mUtM5B-dc1">
+                <input id="order" name="order" type="hidden" value="1">
+                <input id="page" name="page" type="hidden" value="">
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="napr">Направление</label>
+                        <select class="form-control" id="napr" name="napr">
+                            <option value="-1">Все направления</option>
+                            <option value="0">?</option>
+                            <option value="15">Автоматизированное проектирование</option>
+                            <option value="7">Автоматизированные системы управления технологическими процессами</option>
+                            <option value="34">Закупочные компетенции</option>
+                            <option value="26">Инжиниринговые компетенции</option>
+                            <option value="23">Иностранные языки</option>
+                            <option value="8">Информационные технологии</option>
+                            <option value="30">КПНР</option>
+                            <option value="6">Обеспечение работоспособности оборудования</option>
+                            <option value="9">Объекты, поднадзорные органам Ростехнадзора</option>
+                            <option value="4">Охрана труда</option>
+                            <option value="19">Прочие</option>
+                            <option value="14">Транспортные средства</option>
+                            <option value="3">Управление качеством продукции</option>
+                            <option value="1">Управление персоналом</option>
+                            <option value="99">Экологическая безопасность</option>
+                            <option value="2">Экономика и финансово-хозяйственная деятельность</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="find">Поиск по номеру / наименованию программы</label>
+                        <input class="form-control" id="find" name="find" type="text" value="">
+                    </div>
+                    <div class="form-group" style="flex: 0 0 auto;"><label>&nbsp;</label><button type="submit" name="action" value="set" class="btn">Найти</button></div>
+                    <div class="form-group" style="flex: 0 0 auto;"><label>&nbsp;</label><button type="button" class="btn btn-secondary" onclick="window.location.href='/ProgramsList?order=1';return false;">Сбросить поиск</button></div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group" style="flex: 0 0 auto;"><button type="submit" name="action" value="print" class="btn btn-success">Сформировать перечень для печати</button></div>
+                    <div class="form-group" style="flex: 0 0 auto;"><a href="/Content/Information/Documents/Перечень программ.xls?559542" class="btn btn-info">Скачать перечень на 2027 г.</a></div>
+                </div>
+            </form>
+
+            <div class="warning-box">* Актуальные цены на программы обучения уточняйте по тел. (8482) 73-88-22.</div>
+
+            <!-- Table -->
+            <div class="table-container">
+                <table class="modern-table">
+                    <thead>
+                        <tr>
+                            <th><a href="/ProgramsList?order=1">№ учебной программы</a></th>
+                            <th><a href="/ProgramsList?order=2">Наименование учебной программы</a></th>
+                            <th><a href="/ProgramsList?order=5">Направление</a></th>
+                            <th><a href="/ProgramsList?order=3">Часы</a></th>
+                            <th><a href="/ProgramsList?order=4">Ориентировочная стоимость, руб.</a></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1754</td><td>Планирование и экономика производства</td><td>Экономика и финансово-хозяйственная деятельность</td><td>40</td><td>9500</td><td><a href="/ProgramsList/ShowTemPlan?rsnprogr=1754">Содержание программы</a></td><td><a href="/ApplicationForTraining?rsnprogr=1754">Заявка на обучение</a></td></tr>
+                        <tr><td>1774</td><td>Анализ хозяйственной деятельности современного предприятия</td><td>Экономика и финансово-хозяйственная деятельность</td><td>40</td><td>12900</td><td><a href="/ProgramsList/ShowTemPlan?rsnprogr=1774">Содержание программы</a></td><td><a href="/ApplicationForTraining?rsnprogr=1774">Заявка на обучение</a></td></tr>
+                        <!-- Остальные строки таблицы остаются такими же -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination">
+                <a href="/ProgramsList?order=1&amp;page=1" class="active">1</a>
+                <a href="/ProgramsList?order=1&amp;page=2">2</a>
+                <a href="/ProgramsList?order=1&amp;page=3">3</a>
+                <!-- ... остальные страницы ... -->
+                <a href="/ProgramsList?order=1&amp;page=22">22</a>
+            </div>
+
+            <div style="text-align: center; margin-top: 2rem;">
+                <a href="#" onclick="history.back();return false;" class="back-link">Вернуться назад</a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <img src="map.png" alt="Адрес">
+                    <p>445024, Российская Федерация, Самарская область, г. Тольятти, Южное шоссе, д.121</p>
+                </div>
+                <div class="footer-section">
+                    <img src="phone.png" alt="Телефон">
+                    <p>(8482) 73-88-22</p>
+                </div>
+                <div class="footer-section">
+                    <img src="mail.png" alt="Почта">
+                    <p><a href="mailto:mail@cu-avtovaz.ru">mail@cu-avtovaz.ru</a></p>
+                </div>
+                <div class="footer-section">
+                    <img src="vk.png" alt="VK">
+                    <p><a href="https://vk.com/public211289289" target="_blank">Университет в VK</a></p>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>Университет Группы «АВТОВАЗ» © 2026. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Accessibility Toggle -->
+    <button class="accessibility-toggle" onclick="toggleAccessibility()" aria-label="Версия для слабовидящих">
+        <img src="/Content/images/eyes_orange.png" alt="Версия для слабовидящих">
+    </button>
+
+    <script>
+        // Mobile Navigation
+        document.getElementById('hamburger').addEventListener('click', () => {
+            document.getElementById('mainNav').classList.toggle('active');
+        });
+
+        
+        // Direction select change
+        document.getElementById('napr').addEventListener('change', function() {
+            var id = this.value;
+            window.location.href = "http://" + document.location.host + "/ProgramsList/Index?napr=" + id;
+        });
+    </script>
+</body>
+</html>
